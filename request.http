@@ -1,0 +1,45 @@
+GET http://localhost:3000/users/62f005f83f02648e632d8647
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Vladimir1",
+  "about": "Student",
+  "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg"
+}
+###
+PATCH http://localhost:3000/users/me
+Content-Type: application/json
+
+{
+  "name": "Vladimir",
+  "about": "Student1"
+}
+###
+PATCH http://localhost:3000/users/me/avatar
+Content-Type: application/json
+
+{
+  "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg"
+}
+###
+GET  http://localhost:3000/cards
+###
+POST http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "name": "Cat1",
+  "link" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg"
+}
+###
+
+DELETE http://localhost:3000/cards/62f0648da5d84776e3534a43
+
+###
+PUT http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
+###
+DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
+###
