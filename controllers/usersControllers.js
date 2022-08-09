@@ -25,7 +25,13 @@ exports.createUser = (req, res) => {
   if (name && about && avatar) {
     User.create({ name, about, avatar })
       .then((user) => res.send({ data: user }))
-      .catch((err) => res.status(500).send({ message: `Произошла ошибка: ${err}` }));
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          res.status(400).send({ message: `Произошла ошибка: ${err}` });
+        } else {
+          res.status(500).send({ message: `Произошла ошибка: ${err}` });
+        }
+      });
   } else {
     res.status(400).send({ message: 'Переданы некорректные данные' });
   }
@@ -36,7 +42,13 @@ exports.updateProfil = (req, res) => {
   if (name && about) {
     User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
       .then((user) => res.send({ data: user }))
-      .catch((err) => res.status(500).send({ message: `Произошла ошибка: ${err}` }));
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          res.status(400).send({ message: `Произошла ошибка: ${err}` });
+        } else {
+          res.status(500).send({ message: `Произошла ошибка: ${err}` });
+        }
+      });
   } else {
     res.status(400).send({ message: 'Переданы некорректные данные' });
   }
