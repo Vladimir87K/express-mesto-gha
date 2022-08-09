@@ -1,6 +1,14 @@
 // const users = require("./../users.json");
 const User = require('../models/user');
 
+function checkErrorValidation(err, res) {
+  if (err.name === 'ValidationError') {
+    res.status(400).send({ message: `Произошла ошибка: ${err}` });
+  } else {
+    res.status(500).send({ message: `Произошла ошибка: ${err}` });
+  }
+}
+
 exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => {
@@ -17,7 +25,14 @@ exports.getUserById = (req, res) => {
     .then((user) => {
       res.send({ data: user });
     })
-    .catch((err) => res.status(500).send({ message: `Произошла ошибка: ${err}` }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: `Переданы некорректные данные: ${err}` });
+      } else {
+        res.status(500).send({ message: `Произошла ошибка: ${err}` });
+      }
+      res.status(500).send({ message: `Произошла ошибка: ${err}` });
+    });
 };
 
 exports.createUser = (req, res) => {
@@ -26,11 +41,7 @@ exports.createUser = (req, res) => {
     User.create({ name, about, avatar })
       .then((user) => res.send({ data: user }))
       .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(400).send({ message: `Произошла ошибка: ${err}` });
-        } else {
-          res.status(500).send({ message: `Произошла ошибка: ${err}` });
-        }
+        checkErrorValidation(err, res);
       });
   } else {
     res.status(400).send({ message: 'Переданы некорректные данные' });
@@ -43,11 +54,7 @@ exports.updateProfil = (req, res) => {
     User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
       .then((user) => res.send({ data: user }))
       .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(400).send({ message: `Произошла ошибка: ${err}` });
-        } else {
-          res.status(500).send({ message: `Произошла ошибка: ${err}` });
-        }
+        checkErrorValidation(err, res);
       });
   } else {
     res.status(400).send({ message: 'Переданы некорректные данные' });

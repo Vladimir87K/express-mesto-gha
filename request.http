@@ -1,12 +1,12 @@
-GET http://localhost:3000/users/62f005f83f02648e632d8647
+GET http://localhost:3000/users/62f005f83f02648e632d864
 ###
 
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "name": "V",
-  "about": "Student",
+  "name": "Vladimir",
+  "about": "Stud",
   "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg"
 }
 ###
