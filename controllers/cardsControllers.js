@@ -8,6 +8,14 @@ function checkErrorValidation(err, res) {
   }
 }
 
+function checkErrorId(err, res) {
+  if (err.name === 'CastError') {
+    res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
+  } else {
+    res.status(500).send({ message: `Произошла ошибка: ${err}` });
+  }
+}
+
 exports.getCards = (req, res) => {
   Card.find({})
     .populate('owner')
@@ -29,7 +37,7 @@ exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cadrId)
     .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: `Произошла ошибка: ${err}` }));
+    .catch((err) => checkErrorId(err, res));
 };
 
 exports.likeCard = (req, res) => {
@@ -40,13 +48,7 @@ exports.likeCard = (req, res) => {
   )
     .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
     .then((user) => res.send({ data: user }))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
-      } else {
-        res.status(500).send({ message: `Произошла ошибка: ${err}` });
-      }
-    });
+    .catch((err) => checkErrorId(err, res));
 };
 
 exports.deleteLikeCard = (req, res) => {
@@ -57,5 +59,5 @@ exports.deleteLikeCard = (req, res) => {
   )
     .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: `Произошла ошибка: ${err}` }));
+    .catch((err) => checkErrorId(err, res));
 };

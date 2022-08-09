@@ -14,8 +14,8 @@ PATCH http://localhost:3000/users/me
 Content-Type: application/json
 
 {
-  "name": "V",
-  "about": "Student1"
+  "name": "Vladimir2",
+  "about": "Student2"
 }
 ###
 PATCH http://localhost:3000/users/me/avatar
