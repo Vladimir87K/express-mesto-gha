@@ -7,7 +7,7 @@ exports.getCards = (req, res) => {
   Card.find({})
     .populate('owner')
     .then((cards) => res.send({ data: cards }))
-    .cath((err) => checkErrorDefault(err, res));
+    .catch((err) => checkErrorDefault(err, res));
 };
 
 exports.createCard = (req, res) => {

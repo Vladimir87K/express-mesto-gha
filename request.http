@@ -14,7 +14,7 @@ PATCH http://localhost:3000/users/me
 Content-Type: application/json
 
 {
-  "name": "Vlad",
+  "name": "V",
   "about": "Stud"
 }
 ###
@@ -36,10 +36,10 @@ Content-Type: application/json
 }
 ###
 
-DELETE http://localhost:3000/cards/62f25b2d73f859575a910ece
+DELETE http://localhost:3000/cards/62f25fc9cae39d82293b2465
 
 ###
-PUT http://localhost:3000/cards/62f0653023bab40a6ce17220/likes
+PUT http://localhost:3000/cards/62f25fc9cae39d82293b2465/likes
 ###
 DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
 ###

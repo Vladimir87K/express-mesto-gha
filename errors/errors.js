@@ -1,6 +1,5 @@
 const checkErrorDefault = (err, res) => {
   res.status(500).send({ message: `Произошла ошибка: ${err}` });
-  console.log(err.name);
 };
 
 const checkErrorIncorrectDate = (res) => {
