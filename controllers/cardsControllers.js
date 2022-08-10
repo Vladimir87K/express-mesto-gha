@@ -1,20 +1,5 @@
 const Card = require('../models/card');
-
-function checkErrorValidation(err, res) {
-  if (err.name === 'ValidationError') {
-    res.status(400).send({ message: `Произошла ошибка: ${err}` });
-  } else {
-    res.status(500).send({ message: `Произошла ошибка: ${err}` });
-  }
-}
-
-function checkErrorId(err, res) {
-  if (err.name === 'CastError') {
-    res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
-  } else {
-    res.status(500).send({ message: `Произошла ошибка: ${err}` });
-  }
-}
+const { checkErrorValidation, checkErrorId } = require('../errors/errors');
 
 exports.getCards = (req, res) => {
   Card.find({})

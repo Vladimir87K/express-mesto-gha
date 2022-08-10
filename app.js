@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const usersRoutes = require('./routes/usersRoutes');
 const cardsRoutes = require('./routes/cardsRouters');
+const errorUrl = require('./routes/errorUrl');
 
 // "_id": "62f005f83f02648e632d8647"
 const app = express();
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 // app.use('/users', () => console.log('Click!!!'));
 app.use('/', usersRoutes);
 app.use('/', cardsRoutes);
+app.use('/*', errorUrl);
 
 app.listen(PORT, () => {
   console.log(`Server listen on ${PORT}`);
