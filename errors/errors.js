@@ -1,19 +1,33 @@
-exports.checkErrorValidation = (err, res) => {
+const checkErrorDefault = (err, res) => {
+  res.status(500).send({ message: `Произошла ошибка: ${err}` });
+};
+
+const checkErrorIncorrectDate = (res) => {
+  res.status(400).send({ message: 'Переданы некорректные данные' });
+};
+
+const checkErrorValidation = (err, res) => {
   if (err.name === 'ValidationError') {
     res.status(400).send({ message: `Произошла ошибка: ${err}` });
   } else {
-    res.status(500).send({ message: `Произошла ошибка: ${err}` });
+    checkErrorDefault(err, res);
   }
 };
 
-exports.checkErrorId = (err, res) => {
+const checkErrorId = (err, res) => {
   if (err.name === 'CastError') {
     res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
+  } else if (err.name === 'NotFound') {
+    res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
   } else {
-    res.status(500).send({ message: `Произошла ошибка: ${err}` });
+    checkErrorDefault(err, res);
   }
 };
 
-exports.errorUrl = (req, res) => {
+const errorUrl = (req, res) => {
   res.status(404).send({ message: 'Указан некорректный Url' });
+};
+
+module.exports = {
+  checkErrorDefault, checkErrorValidation, checkErrorId, errorUrl, checkErrorIncorrectDate,
 };

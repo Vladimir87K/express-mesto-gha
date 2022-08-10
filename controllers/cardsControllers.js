@@ -1,10 +1,11 @@
 const Card = require('../models/card');
-const { checkErrorValidation, checkErrorId } = require('../errors/errors');
+const { checkErrorValidation, checkErrorId, checkErrorDefault } = require('../errors/errors');
 
 exports.getCards = (req, res) => {
   Card.find({})
     .populate('owner')
-    .then((cards) => res.send({ data: cards }));
+    .then((cards) => res.send({ data: cards }))
+    .cath((err) => checkErrorDefault(err, res));
 };
 
 exports.createCard = (req, res) => {
@@ -20,7 +21,7 @@ exports.createCard = (req, res) => {
 
 exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cadrId)
-    .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
+    .orFail(() => { throw new Error('NotFound'); })
     .then((user) => res.send({ data: user }))
     .catch((err) => checkErrorId(err, res));
 };
@@ -31,7 +32,7 @@ exports.likeCard = (req, res) => {
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   )
-    .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
+    .orFail(() => { throw new Error('NotFound'); })
     .then((user) => res.send({ data: user }))
     .catch((err) => checkErrorId(err, res));
 };
@@ -42,7 +43,7 @@ exports.deleteLikeCard = (req, res) => {
     { $pull: { likes: req.user._id } }, // убрать _id из массива
     { new: true },
   )
-    .orFail(() => { res.status(404).send({ message: 'Карточка не найдена' }); })
+    .orFail(() => { throw new Error('NotFound'); })
     .then((user) => res.send({ data: user }))
     .catch((err) => checkErrorId(err, res));
 };

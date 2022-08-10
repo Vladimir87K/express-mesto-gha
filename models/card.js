@@ -23,7 +23,6 @@ const cardSchema = new mongoose.Schema({
         ref: 'user',
       },
     ],
-    required: true,
     default: [],
   },
   createdAt: {
