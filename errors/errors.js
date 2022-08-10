@@ -17,7 +17,7 @@ const checkErrorValidation = (err, res) => {
 const checkErrorId = (err, res) => {
   if (err.name === 'CastError') {
     res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
-  } else if (err.name === 'Error') {
+  } else if (err.message === 'NotFound') {
     res.status(404).send({ message: 'Запрашиваемые данные не найдены' });
   } else { checkErrorDefault(err, res); }
 };
