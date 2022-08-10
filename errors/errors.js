@@ -13,3 +13,7 @@ exports.checkErrorId = (err, res) => {
     res.status(500).send({ message: `Произошла ошибка: ${err}` });
   }
 };
+
+exports.errorUrl = (req, res) => {
+  res.status(404).send({ message: 'Указан некорректный Url' });
+};

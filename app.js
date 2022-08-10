@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const usersRoutes = require('./routes/usersRoutes');
 const cardsRoutes = require('./routes/cardsRouters');
-const errorUrl = require('./routes/errorUrl');
+const errorUrl = require('./errors/errors');
 
 // "_id": "62f005f83f02648e632d8647"
 const app = express();
