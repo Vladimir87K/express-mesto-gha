@@ -1,4 +1,4 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/users/62f005f83f02648e632d8645
 ###
 
 POST http://localhost:3000/users
@@ -39,7 +39,7 @@ Content-Type: application/json
 DELETE http://localhost:3000/cards/62f25b2d73f859575a910ece
 
 ###
-PUT http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
+PUT http://localhost:3000/cards/62f0653023bab40a6ce17220/likes
 ###
 DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
 ###

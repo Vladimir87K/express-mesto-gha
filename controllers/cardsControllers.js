@@ -1,5 +1,7 @@
 const Card = require('../models/card');
-const { checkErrorValidation, checkErrorId, checkErrorDefault } = require('../errors/errors');
+const {
+  checkErrorValidation, checkErrorId, checkErrorDefault, checkErrorIncorrectDate,
+} = require('../errors/errors');
 
 exports.getCards = (req, res) => {
   Card.find({})
@@ -15,7 +17,7 @@ exports.createCard = (req, res) => {
       .then((user) => res.send({ data: user }))
       .catch((err) => checkErrorValidation(err, res));
   } else {
-    res.status(400).send({ message: 'Переданы некорректные данные' });
+    checkErrorIncorrectDate(res);
   }
 };
 

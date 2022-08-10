@@ -1,5 +1,6 @@
 const checkErrorDefault = (err, res) => {
   res.status(500).send({ message: `Произошла ошибка: ${err}` });
+  console.log(err.name);
 };
 
 const checkErrorIncorrectDate = (res) => {
@@ -17,11 +18,9 @@ const checkErrorValidation = (err, res) => {
 const checkErrorId = (err, res) => {
   if (err.name === 'CastError') {
     res.status(400).send({ message: `Использовано некорректное _id: ${err}` });
-  } else if (err.name === 'NotFound') {
-    res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
-  } else {
-    checkErrorDefault(err, res);
-  }
+  } else if (err.name === 'Error') {
+    res.status(404).send({ message: 'Запрашиваемые данные не найдены' });
+  } else { checkErrorDefault(err, res); }
 };
 
 const errorUrl = (req, res) => {
