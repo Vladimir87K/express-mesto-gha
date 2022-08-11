@@ -6,7 +6,6 @@ const usersRoutes = require('./routes/usersRoutes');
 const cardsRoutes = require('./routes/cardsRouters');
 const { errorUrl } = require('./errors/errors');
 
-// "_id": "62f005f83f02648e632d8647"
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '62f005f83f02648e632d8647', // вставьте сюда _id созданного в предыдущем пункте пользователя
+    _id: '62f005f83f02648e632d8647',
   };
 
   next();
@@ -32,7 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/users', () => console.log('Click!!!'));
 app.use('/', usersRoutes);
 app.use('/', cardsRoutes);
 app.use('/*', errorUrl);
