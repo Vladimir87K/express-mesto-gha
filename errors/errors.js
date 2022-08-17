@@ -27,6 +27,12 @@ const errorUrl = (req, res) => {
 };
 
 const checkErrorsAll = (err, req, res) => {
+  console.log('click!!!', err);
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
+};
+
+const checkErrors = (err, req, res) => {
   if (err.message === 'Нет пользователя с таким id') {
     res.status(401).send({ message: 'Необходима авторизация' });
   } else if (err.message === 'CastError') {
@@ -48,5 +54,5 @@ const checkErrorsAll = (err, req, res) => {
 
 module.exports = {
   // eslint-disable-next-line max-len
-  checkErrorDefault, checkErrorValidation, checkErrorId, errorUrl, checkErrorIncorrectDate, checkErrorsAll,
+  checkErrorDefault, checkErrorValidation, checkErrorId, errorUrl, checkErrorIncorrectDate, checkErrorsAll, checkErrors,
 };

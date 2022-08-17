@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { userValidation, userUpdateValidation, userUpdateAvatarValidation } = require('../validation/validation');
+const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
 exports.getUsers = (req, res, next) => {
   User.find({})
@@ -13,7 +16,7 @@ exports.getUsers = (req, res, next) => {
 exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(() => {
-      throw new Error('NotFound');
+      throw new NotFoundError('Использованный Id не найден');
     })
     .then((user) => {
       res.send({ data: user });
@@ -22,11 +25,15 @@ exports.getUserById = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+  const { error } = userValidation(req.body);
+  if (error) {
+    throw new BadRequestError('Введены некорректные данные');
+  }
   const { email, password } = req.body;
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new Error('Неправильные почта или пароль');
+        throw new BadRequestError('Неправильные почта или пароль');
       }
       return bcrypt.compare(password, user.password)
         // eslint-disable-next-line consistent-return
@@ -35,7 +42,7 @@ exports.login = (req, res, next) => {
             const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
             res.send(token);
           } else {
-            throw new Error('Неправильные почта или пароль');
+            throw new BadRequestError('Неправильные почта или пароль');
           }
         });
     })
@@ -43,6 +50,10 @@ exports.login = (req, res, next) => {
 };
 
 exports.createUser = (req, res, next) => {
+  const { error } = userValidation(req.body);
+  if (error) {
+    throw new BadRequestError('Введены некорректные данные');
+  }
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -55,23 +66,23 @@ exports.createUser = (req, res, next) => {
 };
 
 exports.updateProfil = (req, res, next) => {
-  const { name, about } = req.body;
-  if (!name || !about) {
-    throw new Error('Данные не введены');
-  } else {
-    User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-      .then((user) => res.send({ data: user }))
-      .catch(next);
+  const { error } = userUpdateValidation(req.body);
+  if (error) {
+    throw new BadRequestError('Введены некорректные данные');
   }
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+    .then((user) => res.send({ data: user }))
+    .catch(next);
 };
 
 exports.updateAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  if (!avatar) {
-    throw new Error('Данные не введены');
-  } else {
-    User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-      .then((user) => res.send({ data: user }))
-      .catch(next);
+  const { error } = userUpdateAvatarValidation(req.body);
+  if (error) {
+    throw new BadRequestError('Введены некорректные данные');
   }
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+    .then((user) => res.send({ data: user }))
+    .catch(next);
 };

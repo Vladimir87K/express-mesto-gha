@@ -27,15 +27,13 @@ app.use((req, res, next) => {
 
 app.post('/signup', createUser);
 app.post('/signin', login);
-app.use(auth);
-app.use('/', usersRoutes);
-app.use('/', cardsRoutes);
+app.use('/', auth, usersRoutes);
+app.use('/', auth, cardsRoutes);
 app.use('/*', errorUrl);
 
 app.use((err, req, res, next) => {
   console.log('Работает обработчик ошибок');
   checkErrorsAll(err, req, res);
-  res.status(err.statusCode).send({ message: err.message });
   next();
 });
 

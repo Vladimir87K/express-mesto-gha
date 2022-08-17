@@ -1,31 +1,31 @@
-GET http://localhost:3000/users/62f7e4d58008309261b6cc05
+GET http://localhost:3000/cat
 ###
 
 POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-  "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg",
-  "email" : "asdfg@gmail.com",
+  "email" : "asdf@gmail.com",
   "password": "qwerty"
 }
 ###
-GET http://localhost:3000/users/62f7e4d58008309261b6cc05
+GET http://localhost:3000/users/62fd44a9073f594c44100fa8
 Content-Type: application/json
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRkNTgwMDgzMDkyNjFiNmNjMDUiLCJpYXQiOjE2NjA2MzE3NDksImV4cCI6MTY2MTIzNjU0OX0.hQAT148RXhKPbBo4hd_PQ7rtIkBowmQmLLg7ytayaxs
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 ###
 PATCH http://localhost:3000/users/me/
 Content-Type: application/json
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRkNTgwMDgzMDkyNjFiNmNjMDUiLCJpYXQiOjE2NjA2MzE3NDksImV4cCI6MTY2MTIzNjU0OX0.hQAT148RXhKPbBo4hd_PQ7rtIkBowmQmLLg7ytayaxs
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 {
-  "name": "V",
+  "name": "",
   "about": "Stud"
 }
 ###
 PATCH http://localhost:3000/users/me/avatar
 Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 {
   "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-0.jpg"
@@ -37,17 +37,21 @@ Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRk
 ###
 POST http://localhost:3000/cards
 Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 {
-  "name": "Cat0",
+  "name": "",
   "link" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-0.jpg"
 }
 ###
 
-DELETE http://localhost:3000/cards/62f25fc9cae39d82293b2465
+DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 ###
-PUT http://localhost:3000/cards/62f25fc9cae39d82293b2465/likes
+PUT http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
+
 ###
 DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
 ###
