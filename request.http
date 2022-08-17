@@ -1,17 +1,23 @@
-GET http://localhost:3000/users/62f005f83f02648e632d8640
+GET http://localhost:3000/users/62f7e4d58008309261b6cc05
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-  "name": "Vladimir7",
-  "about": "Student7",
-  "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg"
+  "avatar" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-8.jpg",
+  "email" : "asdfg@gmail.com",
+  "password": "qwerty"
 }
 ###
-PATCH http://localhost:3000/users/me
+GET http://localhost:3000/users/62f7e4d58008309261b6cc05
 Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRkNTgwMDgzMDkyNjFiNmNjMDUiLCJpYXQiOjE2NjA2MzE3NDksImV4cCI6MTY2MTIzNjU0OX0.hQAT148RXhKPbBo4hd_PQ7rtIkBowmQmLLg7ytayaxs
+
+###
+PATCH http://localhost:3000/users/me/
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRkNTgwMDgzMDkyNjFiNmNjMDUiLCJpYXQiOjE2NjA2MzE3NDksImV4cCI6MTY2MTIzNjU0OX0.hQAT148RXhKPbBo4hd_PQ7rtIkBowmQmLLg7ytayaxs
 
 {
   "name": "V",
@@ -26,6 +32,8 @@ Content-Type: application/json
 }
 ###
 GET  http://localhost:3000/cards
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmY3ZTRkNTgwMDgzMDkyNjFiNmNjMDUiLCJpYXQiOjE2NjA2MzE3NDksImV4cCI6MTY2MTIzNjU0OX0.hQAT148RXhKPbBo4hd_PQ7rtIkBowmQmLLg7ytayaxs
+
 ###
 POST http://localhost:3000/cards
 Content-Type: application/json
