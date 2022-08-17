@@ -4,6 +4,7 @@ const User = require('../models/user');
 const { userValidation, userUpdateValidation, userUpdateAvatarValidation } = require('../validation/validation');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
+const ConflictError = require('../errors/ConflictError');
 
 exports.getUsers = (req, res, next) => {
   User.find({})
@@ -57,6 +58,13 @@ exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        throw new ConflictError('Указанный Email уже сохранене');
+      }
+    })
+    .catch(next);
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
