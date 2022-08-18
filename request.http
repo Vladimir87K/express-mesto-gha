@@ -57,4 +57,6 @@ Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRh
 
 ###
 DELETE http://localhost:3000/cards/62f0653023bab40a6ce17221/likes
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
+
 ###

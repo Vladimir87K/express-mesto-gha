@@ -10,7 +10,7 @@ const BadRequestError = require('../errors/BadRequestError');
 exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.send({ data: users });
+      res.status(200).send({ data: users });
     })
     .catch(next);
 };
@@ -25,7 +25,7 @@ exports.getUserById = (req, res, next) => {
       throw new NotFoundError('Использованный Id не найден');
     })
     .then((user) => {
-      res.send({ data: user });
+      res.status(200).send({ data: user });
     })
     .catch(next);
 };
@@ -46,7 +46,7 @@ exports.login = (req, res, next) => {
         .then((matched) => {
           if (matched) {
             const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
-            res.send({ token });
+            res.status(200).send({ token });
           } else {
             throw new BadRequestError('Неправильные почта или пароль');
           }
@@ -85,7 +85,7 @@ exports.updateProfil = (req, res, next) => {
   }
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.status(200).send({ data: user }))
     .catch(next);
 };
 
@@ -96,6 +96,6 @@ exports.updateAvatar = (req, res, next) => {
   }
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.status(200).send({ data: user }))
     .catch(next);
 };

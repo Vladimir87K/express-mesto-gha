@@ -15,7 +15,7 @@ exports.userValidation = (data) => {
 
 exports.cardValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().pattern(redex),
   }).unknown(true);
   return schema.validate(data);
