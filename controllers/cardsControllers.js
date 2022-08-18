@@ -1,8 +1,15 @@
 const Card = require('../models/card');
-const { cardValidation } = require('../validation/validation');
+const { cardValidation, validationId } = require('../validation/validation');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
+
+const checkValidationId = (data) => {
+  const { error } = validationId({ id: data });
+  if (error) {
+    throw new BadRequestError('Использован некорректный Id');
+  }
+};
 
 exports.getCards = (req, res, next) => {
   Card.find({})
@@ -24,10 +31,12 @@ exports.createCard = (req, res, next) => {
 };
 
 exports.deleteCard = (req, res, next) => {
+  checkValidationId(req.params.cadrId);
   Card.findById(req.params.cadrId)
     .orFail(() => { throw new NotFoundError('Карточка не найдена'); })
     .then((card) => {
-      if (card.owner !== req.user._id) {
+      console.log(card.owner.toString(), req.user._id);
+      if (card.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Нет прав на удаление карточки');
       }
       return card.remove();
@@ -37,6 +46,7 @@ exports.deleteCard = (req, res, next) => {
 };
 
 exports.likeCard = (req, res, next) => {
+  checkValidationId(req.params.cadrId);
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
@@ -48,6 +58,7 @@ exports.likeCard = (req, res, next) => {
 };
 
 exports.deleteLikeCard = (req, res, next) => {
+  checkValidationId(req.params.cadrId);
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // убрать _id из массива

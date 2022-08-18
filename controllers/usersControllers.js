@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { userValidation, userUpdateValidation, userUpdateAvatarValidation } = require('../validation/validation');
+const {
+  userValidation, userUpdateValidation, userUpdateAvatarValidation, validationId,
+} = require('../validation/validation');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
@@ -14,6 +16,10 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.getUserById = (req, res, next) => {
+  const { error } = validationId({ id: req.params.userId });
+  if (error) {
+    throw new BadRequestError('Использован некорректный Id');
+  }
   User.findById(req.params.userId)
     .orFail(() => {
       throw new NotFoundError('Использованный Id не найден');
@@ -61,12 +67,13 @@ exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.send({ data: {
-      name: user.name,
-      about: user.about,
-      avatar: user.avatar,
-      email: user.email,
-    },
+    .then((user) => res.send({
+      data: {
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        email: user.email,
+      },
     }))
     .catch(next);
 };
