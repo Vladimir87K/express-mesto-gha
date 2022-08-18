@@ -43,7 +43,7 @@ Content-Type: application/json
 Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 {
-  "name": "",
+  "name": "catty",
   "link" : "https://kartinkin.net/uploads/posts/2022-02/1644872596_8-kartinkin-net-p-kotiki-kartinki-0.jpg"
 }
 ###

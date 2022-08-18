@@ -25,10 +25,9 @@ exports.createCard = (req, res, next) => {
 
 exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cadrId)
+    .orFail(() => { throw new NotFoundError('Карточка не найдена'); })
     .then((card) => {
-      if (!card) {
-        throw new BadRequestError('Карточка не найдена');
-      } else if (card.owner !== req.user._id) {
+      if (card.owner !== req.user._id) {
         throw new ForbiddenError('Нет прав на удаление карточки');
       }
       return card.remove();
@@ -44,7 +43,7 @@ exports.likeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => { throw new NotFoundError('Такой карточки не найдено'); })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.syatus(200).send({ data: user }))
     .catch(next);
 };
 
@@ -55,6 +54,6 @@ exports.deleteLikeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => { throw new NotFoundError('Такой карточки не найдено'); })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.status(200).send({ data: user }))
     .catch(next);
 };

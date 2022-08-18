@@ -16,7 +16,7 @@ module.exports.userValidation = (data) => {
 module.exports.cardValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(2).max(30),
-    link: Joi.string().email().required().pattern(redex),
+    link: Joi.string().required().pattern(redex),
   }).unknown(true);
   return schema.validate(data);
 };
