@@ -48,7 +48,7 @@ Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRh
 }
 ###
 
-DELETE http://localhost:3000/cards/62fdbde2d000cb2246a6ad86
+DELETE http://localhost:3000/cards/62f25c2273f859575a910ee4
 Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 ###
