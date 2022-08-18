@@ -2,6 +2,7 @@ const { PORT = 3000 } = process.env;
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const usersRoutes = require('./routes/usersRoutes');
 const cardsRoutes = require('./routes/cardsRouters');
 const auth = require('./middlewares/auth');
@@ -30,6 +31,8 @@ app.post('/signin', login);
 app.use('/', auth, usersRoutes);
 app.use('/', auth, cardsRoutes);
 app.use('/*', errorUrl);
+
+app.use(errors());
 
 app.use((err, req, res, next) => {
   checkErrorsAll(err, req, res);
