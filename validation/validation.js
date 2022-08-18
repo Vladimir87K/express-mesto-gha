@@ -38,7 +38,7 @@ exports.userUpdateAvatarValidation = (data) => {
 
 exports.validationId = (data) => {
   const schema = Joi.object({
-    id: Joi.string().required(),
+    id: Joi.string().required().length(24),
   }).unknown(true);
   return schema.validate(data);
 };

@@ -6,6 +6,7 @@ const {
 } = require('../validation/validation');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 exports.getUsers = (req, res, next) => {
   User.find({})
@@ -39,7 +40,7 @@ exports.login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new BadRequestError('Неправильные почта или пароль');
+        throw new UnauthorizedError('Неправильные почта или пароль');
       }
       return bcrypt.compare(password, user.password)
         // eslint-disable-next-line consistent-return
