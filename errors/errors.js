@@ -4,7 +4,6 @@ const errorUrl = (req, res) => {
 
 // eslint-disable-next-line consistent-return
 const checkErrorsAll = (err, req, res) => {
-  console.log('click!!!', err);
   if (err.code === 11000) {
     return res.status(409).send({ message: 'Указанный Email уже сохранен' });
   }

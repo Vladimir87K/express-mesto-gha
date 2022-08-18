@@ -32,7 +32,6 @@ app.use('/', auth, cardsRoutes);
 app.use('/*', errorUrl);
 
 app.use((err, req, res, next) => {
-  console.log('Работает обработчик ошибок');
   checkErrorsAll(err, req, res);
   next();
 });
