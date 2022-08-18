@@ -40,7 +40,7 @@ exports.login = (req, res, next) => {
         .then((matched) => {
           if (matched) {
             const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
-            res.send(token);
+            res.send({ token });
           } else {
             throw new BadRequestError('Неправильные почта или пароль');
           }
@@ -61,7 +61,7 @@ exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.send({ id: user._id, email: user.email }))
+    .then((user) => res.send({ data: user }))
     .catch(next);
 };
 

@@ -1,4 +1,6 @@
-GET http://localhost:3000/dog
+GET http://localhost:3000/users/62fd44a9073f594c44100fa8
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
+
 ###
 
 POST http://localhost:3000/signup
@@ -6,7 +8,7 @@ Content-Type: application/json
 
 {
   "name" : "Vladimir",
-  "email" : "as1@gmail.com",
+  "email" : "as12@gmail.com",
   "password": "qwerty"
 }
 ###
@@ -20,7 +22,7 @@ Content-Type: application/json
 Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmZkNDRhOTA3M2Y1OTRjNDQxMDBmYTgiLCJpYXQiOjE2NjA3NjU2ODUsImV4cCI6MTY2MTM3MDQ4NX0.0gIP4jYMujCcOj5VFrCmPRNOVecCafGmuuwmtiAdemA
 
 {
-  "name": "V",
+  "name": "Vlad",
   "about": "Stud"
 }
 ###
