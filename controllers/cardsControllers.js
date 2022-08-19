@@ -1,8 +1,7 @@
 const Card = require('../models/card');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
-const checkErrorValidation = require('../errors/errors');
-const checkErrorValidationId = require('../errors/errors');
+const { checkErrorValidation, checkErrorValidationId } = require('../errors/errors');
 
 exports.getCards = (req, res, next) => {
   Card.find({})
@@ -44,6 +43,7 @@ exports.likeCard = (req, res, next) => {
     .orFail(() => { throw new NotFoundError('Такой карточки не найдено'); })
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
+      console.log(err);
       checkErrorValidationId(err, next);
     });
 };
