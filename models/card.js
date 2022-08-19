@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { isURL } = require('validator');
 
 const cardSchema = new mongoose.Schema({
   name: { // у пользователя есть имя — опишем требования к имени в схеме:
@@ -10,6 +11,7 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: [isURL, 'invalid URL'],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

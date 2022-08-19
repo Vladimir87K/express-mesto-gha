@@ -9,8 +9,7 @@ const cardsRoutes = require('./routes/cardsRouters');
 const auth = require('./middlewares/auth');
 const { errorUrl, checkErrorsAll } = require('./errors/errors');
 const { login, createUser } = require('./controllers/usersControllers');
-
-const redex = /https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i;
+const redex = require('./utils/utils');
 
 const app = express();
 app.use(bodyParser.json());

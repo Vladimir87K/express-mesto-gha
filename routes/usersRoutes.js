@@ -6,7 +6,7 @@ const {
 
 const userRoutes = express.Router();
 
-const redex = /https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i;
+const redex = require('../utils/utils');
 
 userRoutes.get('/users', getUsers);
 
@@ -19,7 +19,7 @@ userRoutes.patch('/users/me', celebrate({
 
 userRoutes.get('/users/:userId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    userId: Joi.string().alphanum().hex().length(24),
   }).unknown(true),
 }), getUserById);
 

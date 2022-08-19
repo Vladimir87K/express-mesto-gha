@@ -1,10 +1,11 @@
 const Card = require('../models/card');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
 exports.getCards = (req, res, next) => {
   Card.find({})
-    .populate('owner')
+    .populate('_id')
     .then((cards) => res.send({ data: cards }))
     .catch(next);
 };
@@ -13,7 +14,12 @@ exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ data: card }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      }
+      next(err);
+    });
 };
 
 exports.deleteCard = (req, res, next) => {

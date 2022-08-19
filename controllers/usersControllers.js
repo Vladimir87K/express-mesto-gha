@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const ConflictError = require('../errors/ConflictError');
 
 exports.getUsers = (req, res, next) => {
   User.find({})
@@ -49,6 +50,11 @@ exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
+  User.findOne({ email }).then((card) => {
+    if (card) {
+      throw new ConflictError('Указанный Email уже сохранен');
+    }
+  });
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
@@ -61,19 +67,34 @@ exports.createUser = (req, res, next) => {
         email: user.email,
       },
     }))
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError('Указанный Email уже сохранен'));
+      }
+      next(err);
+    });
 };
 
 exports.updateProfil = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
     .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      }
+      next(err);
+    });
 };
 
 exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      }
+      next(err);
+    });
 };

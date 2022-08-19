@@ -2,7 +2,7 @@ const express = require('express');
 const { celebrate, Joi } = require('celebrate');
 
 const cardsRouters = express.Router();
-const redex = /https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i;
+const redex = require('../utils/utils');
 const {
   getCards, createCard, deleteCard, likeCard, deleteLikeCard,
 } = require('../controllers/cardsControllers');
@@ -18,19 +18,19 @@ cardsRouters.post('/cards', celebrate({
 
 cardsRouters.delete('/cards/:cadrId', celebrate({
   params: Joi.object().keys({
-    cadrId: Joi.string().alphanum().length(24),
+    cadrId: Joi.string().alphanum().hex().length(24),
   }).unknown(true),
 }), deleteCard);
 
 cardsRouters.put('/cards/:cardId/likes', celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().alphanum().hex().length(24),
   }).unknown(true),
 }), likeCard);
 
 cardsRouters.delete('/cards/:cardId/likes', celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().alphanum().hex().length(24),
   }).unknown(true),
 }), deleteLikeCard);
 
