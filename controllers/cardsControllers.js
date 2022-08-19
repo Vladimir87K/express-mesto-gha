@@ -1,7 +1,8 @@
 const Card = require('../models/card');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
-const BadRequestError = require('../errors/BadRequestError');
+const checkErrorValidation = require('../errors/errors');
+const checkErrorValidationId = require('../errors/errors');
 
 exports.getCards = (req, res, next) => {
   Card.find({})
@@ -15,10 +16,7 @@ exports.createCard = (req, res, next) => {
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      }
-      next(err);
+      checkErrorValidation(err, next);
     });
 };
 
@@ -32,7 +30,9 @@ exports.deleteCard = (req, res, next) => {
       return card.remove();
     })
     .then(() => res.status(200).send({ message: `Вы удалили карточку: ${req.params.cadrId}` }))
-    .catch(next);
+    .catch((err) => {
+      checkErrorValidationId(err, next);
+    });
 };
 
 exports.likeCard = (req, res, next) => {
@@ -43,7 +43,9 @@ exports.likeCard = (req, res, next) => {
   )
     .orFail(() => { throw new NotFoundError('Такой карточки не найдено'); })
     .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      checkErrorValidationId(err, next);
+    });
 };
 
 exports.deleteLikeCard = (req, res, next) => {
@@ -54,5 +56,7 @@ exports.deleteLikeCard = (req, res, next) => {
   )
     .orFail(() => { throw new NotFoundError('Такой карточки не найдено'); })
     .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      checkErrorValidationId(err, next);
+    });
 };
