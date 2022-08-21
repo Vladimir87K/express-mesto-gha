@@ -10,6 +10,7 @@ const auth = require('./middlewares/auth');
 const { errorUrl, checkErrorsAll } = require('./errors/errors');
 const { login, createUser } = require('./controllers/usersControllers');
 const redex = require('./utils/utils');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 app.use(bodyParser.json());
@@ -27,6 +28,8 @@ app.use((req, res, next) => {
   console.log(`${req.method}: ${req.path} ${JSON.stringify(req.body)}`);
   next();
 });
+
+app.use(requestLogger);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -49,6 +52,8 @@ app.use('/', auth, usersRoutes);
 app.use('/', auth, cardsRoutes);
 app.use('/*', errorUrl);
 
+app.use(errorLogger);
+
 app.use(errors());
 
 app.use((err, req, res, next) => {
@@ -57,5 +62,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listen on ${PORT}`);
+  console.log(`Server listen on ${PORT}!`);
 });
