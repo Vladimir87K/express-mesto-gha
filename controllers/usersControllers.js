@@ -8,6 +8,7 @@ const ConflictError = require('../errors/ConflictError');
 const { checkErrorValidation } = require('../errors/errors');
 
 exports.getUsers = (req, res, next) => {
+  console.log('Запрос прошел!');
   User.find({})
     .then((users) => {
       res.status(200).send({ data: users });
